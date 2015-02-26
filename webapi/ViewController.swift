@@ -7,115 +7,114 @@
 //
 
 import UIKit
-import CoreLocation
 
-class ViewController: UIViewController, CLLocationManagerDelegate{
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    var myLocationManager:CLLocationManager!
+    @IBOutlet weak var myTableView: UITableView!
+    @IBOutlet weak var tablecell: UITableViewCell!
+    @IBOutlet weak var backbutton: UIButton!
+    
+    
+    
+    
+    
+    var appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as AppDelegate //AppDelegateのインスタンスを取得
     
     var timer : NSTimer!
+    
+    var loadedflag = false
+    
+    
+    @IBAction func bu_back(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil);
+    }
+    
+    
+    // Segue 準備
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+        if (segue.identifier == "toSubViewController") {
+            //segue前に実行すべき処理
+        }
+    }
+    
+    /*
+    Cellが選択された際に呼び出される.
+    */
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        println("Num: \(indexPath.row)")
+        println("shopname: \(appDelegate.shopnamelist[indexPath.row])")
+        
+        appDelegate.selectedid = indexPath.row
+        
+        performSegueWithIdentifier("toSubViewController",sender: nil)
+    }
+    
+    /*
+    Cellの総数を返す.
+    */
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return appDelegate.shopnamelist.count
+    }
+    
+    /*
+    Cellに値を設定する.
+    */
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        // Cellのフォーマットを取得する.
+        let cell = tableView.dequeueReusableCellWithIdentifier("shopcell", forIndexPath: indexPath) as UITableViewCell
+        
+        var imageView = tableView.viewWithTag(1) as UIImageView
+        imageView.image = appDelegate.imgdata[indexPath.row]
+        
+        let label1 = tableView.viewWithTag(2) as UILabel
+        label1.text = "\(appDelegate.shopnamelist[indexPath.row])"
+
+        return cell
+    }
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
         
-        // 現在地の取得.
-        myLocationManager = CLLocationManager()
+        self.loadedflag = false
         
-        myLocationManager.delegate = self
-        
-        // セキュリティ認証のステータスを取得.
-        let status = CLLocationManager.authorizationStatus()
-        
-        // まだ認証が得られていない場合は、認証ダイアログを表示.
-        if(status == CLAuthorizationStatus.Denied) {
-            println("didChangeAuthorizationStatus:\(status)");
-            // まだ承認が得られていない場合は、認証ダイアログを表示.
-            self.myLocationManager.requestWhenInUseAuthorization()
-        }
-        
-        // 取得精度の設定.
-        myLocationManager.desiredAccuracy = kCLLocationAccuracyBest
-        // 取得頻度の設定.
-        myLocationManager.distanceFilter = 100
-        
-        myLocationManager.startUpdatingLocation()
-        
-        
-        var text = "モスバーガー"
-        let keyword:String! = text.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
-        
-        var url: NSURL = NSURL(string:"http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=3d7b9b87e2cdb691&format=json&name=\(keyword)")!
+        var url: NSURL = NSURL(string:appDelegate.urlstring)!
         var myRequest = NSMutableURLRequest(URL:  url)
         myRequest.HTTPMethod = "GET"
         
         // use NSURLSession
         var task = NSURLSession.sharedSession().dataTaskWithRequest(myRequest, completionHandler: { data, response, error in
             if (error == nil) {
-                //var result = NSString(data: data, encoding: NSUTF8StringEncoding)!
-                //println(result)
                 let json = JSON(data: data)
-                for i in 0...5{
+                for i in 0...9{
                     if let stringdata = json["results"]["shop"][i]["name"].string{
-                        println(stringdata)
+                        NSLog(stringdata)
+                        self.appDelegate.shopnamelist[i] = stringdata
+                        
+                        self.appDelegate.shopaddresslist[i] = json["results"]["shop"][i]["address"].string!
+                        
+                        
+                        let imgurl = NSURL(string: json["results"]["shop"][i]["logo_image"].string!)
+                        var err: NSError?
+                        var imageData :NSData = NSData(contentsOfURL: imgurl!,options: NSDataReadingOptions.DataReadingMappedIfSafe, error: &err)!;
+                        self.appDelegate.imgdata[i] = UIImage(data:imageData)!
                     }
                 }
+                self.loadedflag = true
             } else {
                 println(error)
             }
         })
         task.resume()
         
+        
+        
         //タイマーを作る.
-        timer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: "onUpdate:", userInfo: nil, repeats: true)
+        timer = NSTimer.scheduledTimerWithTimeInterval(0.2, target: self, selector: "onUpdate:", userInfo: nil, repeats: true)
         
-    }
-    
-    func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        //myTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "shopcell")
         
-        println("didChangeAuthorizationStatus");
-        
-        // 認証のステータスをログで表示.
-        var statusStr = "";
-        switch (status) {
-        case .NotDetermined:
-            statusStr = "NotDetermined"
-        case .Restricted:
-            statusStr = "Restricted"
-        case .Denied:
-            statusStr = "Denied"
-        case .Authorized:
-            statusStr = "Authorized"
-        case .AuthorizedWhenInUse:
-            statusStr = "AuthorizedWhenInUse"
-        }
-        println(" CLAuthorizationStatus: \(statusStr)")
-    }
-    
-    // 位置情報取得に成功したときに呼び出されるデリゲート.
-    func locationManager(manager: CLLocationManager!,didUpdateLocations locations: [AnyObject]!){
-        
-        // 緯度・経度の表示.
-        //myLatitudeLabel.text = "緯度：\(manager.location.coordinate.latitude)"
-        //myLatitudeLabel.textAlignment = NSTextAlignment.Center
-        
-        //myLongitudeLabel.text = "経度：\(manager.location.coordinate.longitude)"
-        //myLongitudeLabel.textAlignment = NSTextAlignment.Center
-        
-        
-        //self.view.addSubview(myLatitudeLabel)
-        //self.view.addSubview(myLongitudeLabel)
-        
-        println("緯度：\(manager.location.coordinate.latitude)")
-        println("経度：\(manager.location.coordinate.longitude)")
-        
-        
-        
-    }
-    
-    // 位置情報取得に失敗した時に呼び出されるデリゲート.
-    func locationManager(manager: CLLocationManager!,didFailWithError error: NSError!){
-        println("error")
     }
     
     
@@ -137,6 +136,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate{
     
     func onUpdate(timer : NSTimer){
         println("count")
+        if(self.loadedflag){
+            myTableView.dataSource = self
+            myTableView.delegate = self
+            self.backbutton.titleLabel?.text = "検索に戻る"
+        }else{
+            self.backbutton.titleLabel?.text = "Loading..."
+        }
     }
 
 

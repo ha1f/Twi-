@@ -12,6 +12,24 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    
+    //var selectedshop = "test0"
+    
+    
+    var imgdata = [UIImage(), UIImage(), UIImage(), UIImage(), UIImage(), UIImage(), UIImage(), UIImage(), UIImage(), UIImage()]
+    var shopnamelist = ["TEST1", "TEST2", "TEST3", "TEST3", "TEST3", "TEST3", "TEST3", "TEST3", "TEST3", "TEST3"]//name
+    var shopaddresslist = ["TEST1", "TEST2", "TEST3", "TEST3", "TEST3", "TEST3", "TEST3", "TEST3", "TEST3", "TEST3"]//description
+    
+    var selectedid = 0
+    
+    var lat = 35.6800079345703
+    var lon = 139.768936157227
+    
+    var targetlat = 35.6800079345703
+    var targetlon = 139.768936157227
+    
+    var urlstring = "http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=150d3d7de833b99b&format=json&lat=35.6800079345703&lng=139.768936157227"//初期値
+    
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
