@@ -28,7 +28,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate{
         let status = CLLocationManager.authorizationStatus()
         
         // まだ認証が得られていない場合は、認証ダイアログを表示.
-        if(status == CLAuthorizationStatus.) {
+        if(status == CLAuthorizationStatus.Denied) {
             println("didChangeAuthorizationStatus:\(status)");
             // まだ承認が得られていない場合は、認証ダイアログを表示.
             self.myLocationManager.requestWhenInUseAuthorization()
