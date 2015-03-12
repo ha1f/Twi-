@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A40BA39F1AB1C21900C092EA /* CamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A40BA39E1AB1C21900C092EA /* CamViewController.swift */; };
 		A43357CD1A9EDF2D00D98C90 /* DSC00570.JPG in Resources */ = {isa = PBXBuildFile; fileRef = A43357CC1A9EDF2D00D98C90 /* DSC00570.JPG */; };
 		A43357CF1A9EE4B000D98C90 /* shousai.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43357CE1A9EE4B000D98C90 /* shousai.swift */; };
 		A43358011A9EFEA900D98C90 /* searchviewcontroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43358001A9EFEA900D98C90 /* searchviewcontroller.swift */; };
@@ -17,6 +18,12 @@
 		A43BE92B1A9C4F0100F08C8B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A43BE9291A9C4F0100F08C8B /* LaunchScreen.xib */; };
 		A43BE9371A9C4F0100F08C8B /* webapiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43BE9361A9C4F0100F08C8B /* webapiTests.swift */; };
 		A43BE9411A9C58FF00F08C8B /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43BE9401A9C58FF00F08C8B /* SwiftyJSON.swift */; };
+		A4F08F9B1AB0897C002FBE98 /* TwitterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F08F981AB0897C002FBE98 /* TwitterKit.framework */; };
+		A4F08F9C1AB0897C002FBE98 /* TwitterKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A4F08F991AB0897C002FBE98 /* TwitterKitResources.bundle */; };
+		A4F08F9D1AB0897C002FBE98 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F08F9A1AB0897C002FBE98 /* Fabric.framework */; };
+		A4F08F9F1AB089E7002FBE98 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F08F9E1AB089E7002FBE98 /* LoginViewController.swift */; };
+		A4F08FA11AB08B37002FBE98 /* TimelineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F08FA01AB08B37002FBE98 /* TimelineViewController.swift */; };
+		A4F08FA31AB08B64002FBE98 /* TwitterAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F08FA21AB08B64002FBE98 /* TwitterAPI.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,6 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A40BA39E1AB1C21900C092EA /* CamViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CamViewController.swift; sourceTree = "<group>"; };
 		A43357CC1A9EDF2D00D98C90 /* DSC00570.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = DSC00570.JPG; path = "../../../Pictures/自作/素材/DSC00570.JPG"; sourceTree = "<group>"; };
 		A43357CE1A9EE4B000D98C90 /* shousai.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = shousai.swift; sourceTree = "<group>"; };
 		A43358001A9EFEA900D98C90 /* searchviewcontroller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = searchviewcontroller.swift; sourceTree = "<group>"; };
@@ -44,6 +52,12 @@
 		A43BE9351A9C4F0100F08C8B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A43BE9361A9C4F0100F08C8B /* webapiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = webapiTests.swift; sourceTree = "<group>"; };
 		A43BE9401A9C58FF00F08C8B /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = SOURCE_ROOT; };
+		A4F08F981AB0897C002FBE98 /* TwitterKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TwitterKit.framework; sourceTree = "<group>"; };
+		A4F08F991AB0897C002FBE98 /* TwitterKitResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TwitterKitResources.bundle; sourceTree = "<group>"; };
+		A4F08F9A1AB0897C002FBE98 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		A4F08F9E1AB089E7002FBE98 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		A4F08FA01AB08B37002FBE98 /* TimelineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineViewController.swift; sourceTree = "<group>"; };
+		A4F08FA21AB08B64002FBE98 /* TwitterAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwitterAPI.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +65,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A4F08F9B1AB0897C002FBE98 /* TwitterKit.framework in Frameworks */,
+				A4F08F9D1AB0897C002FBE98 /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,14 +101,21 @@
 		A43BE91D1A9C4F0100F08C8B /* webapi */ = {
 			isa = PBXGroup;
 			children = (
-				A43358021A9F08C000D98C90 /* Main.storyboard */,
+				A4F08FA21AB08B64002FBE98 /* TwitterAPI.swift */,
+				A4F08F981AB0897C002FBE98 /* TwitterKit.framework */,
+				A4F08F991AB0897C002FBE98 /* TwitterKitResources.bundle */,
+				A4F08F9A1AB0897C002FBE98 /* Fabric.framework */,
 				A43357CC1A9EDF2D00D98C90 /* DSC00570.JPG */,
+				A4F08F9E1AB089E7002FBE98 /* LoginViewController.swift */,
+				A40BA39E1AB1C21900C092EA /* CamViewController.swift */,
+				A4F08FA01AB08B37002FBE98 /* TimelineViewController.swift */,
 				A43358001A9EFEA900D98C90 /* searchviewcontroller.swift */,
 				A43357CE1A9EE4B000D98C90 /* shousai.swift */,
 				A43BE9401A9C58FF00F08C8B /* SwiftyJSON.swift */,
 				A43BE9201A9C4F0100F08C8B /* AppDelegate.swift */,
 				A43BE9221A9C4F0100F08C8B /* ViewController.swift */,
 				A43BE9271A9C4F0100F08C8B /* Images.xcassets */,
+				A43358021A9F08C000D98C90 /* Main.storyboard */,
 				A43BE9291A9C4F0100F08C8B /* LaunchScreen.xib */,
 				A43BE91E1A9C4F0100F08C8B /* Supporting Files */,
 			);
@@ -134,6 +157,7 @@
 				A43BE9171A9C4F0100F08C8B /* Sources */,
 				A43BE9181A9C4F0100F08C8B /* Frameworks */,
 				A43BE9191A9C4F0100F08C8B /* Resources */,
+				A4F08F971AB0895A002FBE98 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -208,6 +232,7 @@
 				A43BE92B1A9C4F0100F08C8B /* LaunchScreen.xib in Resources */,
 				A43BE9281A9C4F0100F08C8B /* Images.xcassets in Resources */,
 				A43358041A9F08C000D98C90 /* Main.storyboard in Resources */,
+				A4F08F9C1AB0897C002FBE98 /* TwitterKitResources.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -220,14 +245,34 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		A4F08F971AB0895A002FBE98 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run 10c0f19a96f2cd1cbab670c8f5215271c0cce3e3 2e7aa681d8c1a2794eea542be198a98bc2270ef510236b986bd0fa206c93ec6f";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		A43BE9171A9C4F0100F08C8B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A4F08FA31AB08B64002FBE98 /* TwitterAPI.swift in Sources */,
+				A4F08F9F1AB089E7002FBE98 /* LoginViewController.swift in Sources */,
 				A43357CF1A9EE4B000D98C90 /* shousai.swift in Sources */,
+				A40BA39F1AB1C21900C092EA /* CamViewController.swift in Sources */,
 				A43BE9411A9C58FF00F08C8B /* SwiftyJSON.swift in Sources */,
 				A43BE9231A9C4F0100F08C8B /* ViewController.swift in Sources */,
+				A4F08FA11AB08B37002FBE98 /* TimelineViewController.swift in Sources */,
 				A43358011A9EFEA900D98C90 /* searchviewcontroller.swift in Sources */,
 				A43BE9211A9C4F0100F08C8B /* AppDelegate.swift in Sources */,
 			);
@@ -354,6 +399,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/webapi",
+				);
 				INFOPLIST_FILE = webapi/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -364,6 +413,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/webapi",
+				);
 				INFOPLIST_FILE = webapi/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";

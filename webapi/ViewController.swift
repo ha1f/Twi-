@@ -13,9 +13,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBOutlet weak var myTableView: UITableView!
     @IBOutlet weak var tablecell: UITableViewCell!
     @IBOutlet weak var backbutton: UIButton!
+  
     
-    
-    
+    var shopnamelist :[String] = []{
+        didSet{
+            println("set")
+            myTableView.reloadData()
+        }
+    }
+    var shopaddresslist: [String] = []
+    var shopphotolist:[String] = []
     
     
     var appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as AppDelegate //AppDelegateのインスタンスを取得
@@ -23,7 +30,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var timer : NSTimer!
     
     var loadedflag = false
-    
     
     @IBAction func bu_back(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil);
@@ -42,9 +48,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     */
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         println("Num: \(indexPath.row)")
-        println("shopname: \(appDelegate.shopnamelist[indexPath.row])")
+        println("shopname: \(self.shopnamelist[indexPath.row])")
         
         appDelegate.selectedid = indexPath.row
+        
+        appDelegate.activeShopData.name = self.shopnamelist[indexPath.row]
+        appDelegate.activeShopData.address = self.shopaddresslist[indexPath.row]
+        appDelegate.activeShopData.photourl = self.shopphotolist[indexPath.row]
         
         performSegueWithIdentifier("toSubViewController",sender: nil)
     }
@@ -53,7 +63,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     Cellの総数を返す.
     */
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return appDelegate.shopnamelist.count
+        return self.shopnamelist.count
     }
     
     /*
@@ -68,9 +78,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         imageView.image = appDelegate.imgdata[indexPath.row]
         
         let label1 = tableView.viewWithTag(2) as UILabel
-        label1.text = "\(appDelegate.shopnamelist[indexPath.row])"
+        label1.text = "\(self.shopnamelist[indexPath.row])"
 
         return cell
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        if let a = myTableView.indexPathForSelectedRow(){
+            myTableView.deselectRowAtIndexPath(a, animated: true)
+        }
     }
 
 
@@ -87,15 +104,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         var task = NSURLSession.sharedSession().dataTaskWithRequest(myRequest, completionHandler: { data, response, error in
             if (error == nil) {
                 let json = JSON(data: data)
-                for i in 0...9{
+                for var i = 0;i<json["results"]["results_returned"].string!.toInt()!;i++ {
                     if let stringdata = json["results"]["shop"][i]["name"].string{
-                        NSLog(stringdata)
-                        self.appDelegate.shopnamelist[i] = stringdata
+                        println(stringdata)
                         
-                        self.appDelegate.shopaddresslist[i] = json["results"]["shop"][i]["address"].string!
+                        self.shopnamelist.append(stringdata)
+                        self.shopaddresslist.append(json["results"]["shop"][i]["address"].string!)
+                        self.shopphotolist.append(json["results"]["shop"][i]["photo"]["pc"]["l"].string!)
                         
                         
-                        let imgurl = NSURL(string: json["results"]["shop"][i]["logo_image"].string!)
+                        //let imgurl = NSURL(string: json["results"]["shop"][i]["logo_image"].string!)
+                        let imgurl = NSURL(string: json["results"]["shop"][i]["photo"]["mobile"]["l"].string!)
                         var err: NSError?
                         var imageData :NSData = NSData(contentsOfURL: imgurl!,options: NSDataReadingOptions.DataReadingMappedIfSafe, error: &err)!;
                         self.appDelegate.imgdata[i] = UIImage(data:imageData)!
@@ -112,6 +131,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         //タイマーを作る.
         timer = NSTimer.scheduledTimerWithTimeInterval(0.2, target: self, selector: "onUpdate:", userInfo: nil, repeats: true)
+        
+        myTableView.dataSource = self
+        myTableView.delegate = self
         
         //myTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "shopcell")
         
@@ -137,14 +159,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func onUpdate(timer : NSTimer){
         println("count")
         if(self.loadedflag){
-            myTableView.dataSource = self
-            myTableView.delegate = self
             self.backbutton.titleLabel?.text = "検索に戻る"
         }else{
             self.backbutton.titleLabel?.text = "Loading..."
         }
     }
-
-
 }
 

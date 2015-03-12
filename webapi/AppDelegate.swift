@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Fabric
+import TwitterKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,8 +19,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     
     var imgdata = [UIImage(), UIImage(), UIImage(), UIImage(), UIImage(), UIImage(), UIImage(), UIImage(), UIImage(), UIImage()]
-    var shopnamelist = ["TEST1", "TEST2", "TEST3", "TEST3", "TEST3", "TEST3", "TEST3", "TEST3", "TEST3", "TEST3"]//name
-    var shopaddresslist = ["TEST1", "TEST2", "TEST3", "TEST3", "TEST3", "TEST3", "TEST3", "TEST3", "TEST3", "TEST3"]//description
+    
+    var activeShopData = (name: "name", address: "address", photourl: "")
+    
+    var shops: [AnyObject] = []
     
     var selectedid = 0
     
@@ -34,6 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        Fabric.with([Twitter()])
         return true
     }
 

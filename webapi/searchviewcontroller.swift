@@ -19,11 +19,13 @@ class searchViewController: UIViewController, CLLocationManagerDelegate {
     
     @IBAction func determine(sender: AnyObject) {
         let query: String = textinput.text
+        if query == "" {
+            return
+        }
         let encodedQuery: String = query.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
         appDelegate.urlstring = "http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=150d3d7de833b99b&format=json&name=\(encodedQuery)"
         
         println("loadsegue")
-        
         performSegueWithIdentifier("search",sender: nil)
     }
     
@@ -59,8 +61,7 @@ class searchViewController: UIViewController, CLLocationManagerDelegate {
         // 取得精度の設定.
         myLocationManager.desiredAccuracy = kCLLocationAccuracyBest
         // 取得頻度の設定.
-        myLocationManager.distanceFilter = 100
-
+        myLocationManager.distanceFilter = 100//kCLDistanceFilterNone
         
         
         myLocationManager.startUpdatingLocation()
@@ -85,12 +86,14 @@ class searchViewController: UIViewController, CLLocationManagerDelegate {
             statusStr = "Restricted"
         case .Denied:
             statusStr = "Denied"
-        case .Authorized:
-            statusStr = "Authorized"
+            //case .Authorized:
+            //statusStr = "Authorized"
         case .AuthorizedWhenInUse:
             statusStr = "AuthorizedWhenInUse"
+        default:
+            statusStr = "Authorized"
         }
-        println(" CLAuthorizationStatus: \(statusStr)")
+        println("CLAuthorizationStatus: \(statusStr)")
     }
     
     // 位置情報取得に成功したときに呼び出されるデリゲート.

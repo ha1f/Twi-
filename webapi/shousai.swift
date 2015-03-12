@@ -9,7 +9,7 @@
 import UIKit
 import Social
 
-class shousaiViewController: UIViewController{
+class shousaiViewController: UIViewController, UITextViewDelegate {
     
     var selectedImg: UIImage?
     
@@ -21,6 +21,7 @@ class shousaiViewController: UIViewController{
     
     @IBOutlet weak var addresslabel: UITextView!
     
+    
     var myComposeView : SLComposeViewController!
     
     var myTwitterButton: UIButton!
@@ -30,7 +31,7 @@ class shousaiViewController: UIViewController{
         myComposeView = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
         
         // 投稿するテキストを指定.
-        myComposeView.setInitialText("\(appDelegate.shopnamelist[appDelegate.selectedid])に行くよ")
+        myComposeView.setInitialText("\(appDelegate.activeShopData.name)に行くよ")
 
         myComposeView.addImage(UIImage(named: "oouchi.jpg"))
         
@@ -48,12 +49,30 @@ class shousaiViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        shopimageview.image = appDelegate.imgdata[appDelegate.selectedid]
         
-        shopnamelabel.text = appDelegate.shopnamelist[appDelegate.selectedid]
+        var err: NSError?
+        var imageData :NSData = NSData(contentsOfURL: NSURL(string: appDelegate.activeShopData.photourl)!,options: NSDataReadingOptions.DataReadingMappedIfSafe, error: &err)!;
+        shopimageview.image = UIImage(data:imageData)!
         
-        addresslabel.text = appDelegate.shopaddresslist[appDelegate.selectedid]
+        //shopimageview.image = appDelegate.imgdata[appDelegate.selectedid]
         
+        shopnamelabel.text = appDelegate.activeShopData.name
+        addresslabel.text = appDelegate.activeShopData.address
+        
+        
+        
+        self.addresslabel.returnKeyType = UIReturnKeyType.Done
+        self.addresslabel.delegate = self
+        
+    }
+    
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange,
+        replacementText text: String) -> Bool {
+            if text == "\n" {
+                textView.resignFirstResponder() //キーボードを閉じる
+                return false
+            }
+            return true
     }
 
     
